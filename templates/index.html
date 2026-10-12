@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d19">
+
+  <title>TruthLens | Fake News Detector</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <main class="card">
+
+    <div class="icon">✦</div>
+
+    <p class="eyebrow">THINK BEFORE YOU SHARE</p>
+
+    <h1>Fake News Detector</h1>
+
+    <p class="intro">
+      Have doubts about a news headline?
+      Enter it below and let our machine-learning model
+      predict whether it resembles fake or real news.
+    </p>
+
+    <form method="POST" action="{{ url_for('home') }}">
+
+      <label for="headline">Enter your news headline</label>
+
+      <textarea id="headline" name="headline" rows="4" maxlength="1000" placeholder="Paste your news headline here..."
+        required>{{ headline }}</textarea>
+
+      <button type="submit">
+        Check headline <span>→</span>
+      </button>
+
+    </form>
+
+    {% if prediction %}
+    <section class="result {{ prediction }}" aria-live="polite">
+
+      <p class="result-label">MODEL PREDICTION</p>
+
+      <h2>
+        {% if prediction == 'fake' %}
+        Possibly Fake
+        {% else %}
+        Possibly Real
+        {% endif %}
+      </h2>
+
+      <p>
+        {% if prediction == 'fake' %}
+        The model found similarities with headlines
+        labelled fake in its training data.
+        {% else %}
+        The model found similarities with headlines
+        labelled real in its training data.
+        {% endif %}
+      </p>
+
+    </section>
+    {% endif %}
+
+    <div class="notice">
+      <strong>Important:</strong>
+      This is an educational machine-learning project.
+      A prediction is not proof that a headline is true or false.
+      Verify important claims using trusted news sources.
+    </div>
+
+    <footer>
+      Built with Python · Flask · Machine Learning
+    </footer>
+
+  </main>
+</body>
+
+</html>
